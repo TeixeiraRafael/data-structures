@@ -5,31 +5,48 @@ class Node
 {
     private:
         int x;
-        Node* next;
+        Node* left;
+        Node* right;
     public:
         Node(){
-            next = NULL;        
+            right = NULL;
+            left = NULL;
         }
         
         Node(int x){
             this->x = x;
-            this->next = NULL;
+            this->left = NULL;
+            this->right = NULL;
         }
         
         int getX(){
             return x;
         }
         
-        void setX(char c){
+        void setX(int x){
             this->x = x;
         }
         
-        Node* getNext(){
-            return next;
+        Node* getLeft(){
+            return left;
         }
         
-        void setNext(Node *next){
-            this->next = next;
+        Node* getRight(){
+            return right;
+        }
+        
+        void setLeft(Node* left){
+            this->left = left;
+        }
+
+        void setRight(Node* right){
+            this->right = right;
+        }
+
+        bool isLeaf(){
+            if(this->left == NULL && this->right == NULL)
+                return 1;
+            return 0;
         }
 };
 
