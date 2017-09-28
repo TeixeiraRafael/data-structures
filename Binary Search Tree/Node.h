@@ -7,10 +7,12 @@ class Node
         int x;
         Node* left;
         Node* right;
+        Node* parent;
     public:
         Node(){
             right = NULL;
             left = NULL;
+            parent = NULL;
         }
         
         Node(int x){
@@ -30,9 +32,13 @@ class Node
         Node* getLeft(){
             return left;
         }
-        
+                
         Node* getRight(){
             return right;
+        }
+        
+        Node* getParent(){
+            return parent;
         }
         
         void setLeft(Node* left){
@@ -41,6 +47,10 @@ class Node
 
         void setRight(Node* right){
             this->right = right;
+        }
+        
+        void setParent(Node* parent){
+            this->parent = parent;
         }
 
         bool isLeaf(){
@@ -60,5 +70,12 @@ class Node
                 return 1;
             return 0;           
         }
+        
+        bool hasParent(){
+            if(this->parent != NULL)
+                return 1;
+            return 0;           
+        }
+        
 };
 
