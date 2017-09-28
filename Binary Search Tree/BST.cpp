@@ -43,74 +43,38 @@ public:
         return 0;          
     }
 
-    void remove_root(){
-        if(root != NULL){
-            Node* delPtr = root;
-            int rootKey = root->getX();
-            
-            if(root->getLeft() == NULL && root->getRight() == NULL){
-                this->root = NULL;
-                delete delPtr;
-                cout << "Root deleted." <<endl;
-            }
-            else if(root->getLeft() == NULL && root->getRight() != NULL){
-                root = root->getRight();
-                delPtr->setRight(NULL);
-                delete delPtr;
-                cout << "The node " << rootKey << " was deleted.\n" << root->getX() << " is the new root." << endl;
-            }
-            else if(root->getLeft() != NULL  && root->getRight() == NULL){
-                root = root->getLeft();
-                delPtr->setLeft(NULL);
-                delete delPtr;
-                cout << "The node " << rootKey << " was deleted.\n" << root->getX() << " is the new root." << endl;
-            }
-        }else{
-            cout << "The tree is empty." << endl;
-        }
-    }
-
-    void remove_current(int params){
-
-    }
-
-    void remove(int key){
+    Node* remove(int key){
         remove(key, this->root);
     }
 
-    void remove(int key, Node* parent){
-        if(this->root != NULL){
-            if(root->getX() == key){
-                remove_root();
-            }
-            else{
-                if(key < parent->getX() && parent->getLeft() != NULL){
-                    if(parent->getLeft()->getX() == key){
-                        remove_current(123);
-                    }
-                    else{
-                        remove(key, parent->getLeft());
-                    }                    
-                }
-                else if(key > parent->getX() && parent->getRight() != NULL){
-                    if(parent->getRight()->getX() == key){
-                        remove_current(321);
-                    }
-                    else{
-                        remove(key, parent->getRight());
-                    }
-                }
-                else{
-                    cout << "The key (" << key << ") was not found." << endl;
-                }
-            }
+    Node* remove(int key, Node* parent){
+        if(parent == NULL) return parent;
+
+        //Se a chave for menor que o valor no nodo atual, roda a função na sub-àrvore à esquerda
+        if(key < parent->getX()){
+            parent->setLeft(remove(key, parent->getLeft()));
         }
+        //Se a chave for menor que o valor no nodo atual, roda a função na sub-àrvore à direita
+        else if(key > parent->getX())){
+            parent->setRight(remove(key, parent->getRight()));
+        }
+        //Se a chave for igual ao valor no nodo atual, deleta o nodo atual
         else{
-            cout  << "The tree is empty" <<endl;
+
         }
+
+    }
+    Node* min_value(){
+        min_value(this->root);
     }
 
-
+    Node* min_value(Node* current){
+        if(current->hasLeft()){
+            min_value(current);
+        }else{
+            return current;
+        }
+    }
     void prefix_left(){
         prefix_left(this->root);}
     void prefix_left(Node* current){
@@ -183,11 +147,12 @@ int main(){
     BST bst;
     bst.insert(10);
     bst.insert(8);
-    bst.insert(7);
+    bst.insert(11);
+    
 
     cout << "print:\t" << endl;
     bst.prefix_left();
 
-    bst.remove(10);
+    bst.remove();
     bst.prefix_left();
 }

@@ -48,5 +48,17 @@ class Node
                 return 1;
             return 0;
         }
+
+        bool hasLeft(){
+            if(this->left != NULL)
+                return 1;
+            return 0;           
+        }
+
+        bool hasRight(){
+            if(this->right != NULL)
+                return 1;
+            return 0;           
+        }
 };
 
