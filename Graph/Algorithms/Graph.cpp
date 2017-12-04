@@ -5,7 +5,7 @@
 #include <queue>
 #include <functional>
 
-const int INF = 1000000000;
+#define INF 1000000000
 
 using namespace std;
 
@@ -42,10 +42,9 @@ void dijkstra(Graph G, int s){
     vector<int> dist(G.n, INF);     //Definindo todas as distâncias como infinitas
     dist[s] = 0;                    //Dstância do nó de origem até ele mesmo é 0
     
-    //Fila de prioridade de pares (distancia, nodo)
-    priority_queue<pair<int, int>, vector<pair<int, int> >, greater< pair<int, int> > > Q; 
-       
-    Q.push(make_pair(0, s));        //Adicionando a origem à fila, com distância 0
+    //Fila de prioridade de pares (distancia, nodo) ordenada pelo menor valor
+    priority_queue<pair<int, int>, vector<pair<int, int> >, greater< pair<int, int> > > Q;
+    Q.push(make_pair(0, s));
 
     while(!Q.empty()){
         //Pega e remove o primeiro par da lista
@@ -54,15 +53,16 @@ void dijkstra(Graph G, int s){
         int d = front.first;
 
         if(d > dist[u]) continue;
+        //Percorre os nós vizinhos de U procurando o com menor distância
         for(int j = 0; j < G.adj[u].size(); j++){
             pair<int, int> v = G.adj[u][j]; //Vizinho atual de U
-            int alt = dist[u] + v.second;
-            if(alt < dist[v.first]){
-                dist[v.first] = alt; //Relaxamento
-                Q.push(make_pair(dist[v.first], v.first)); //Insere nó adjacente na fila de prioridade
+            int alt = dist[u] + v.second; 
+            if(alt < dist[v.first]){ //Se a distância até o nó atual + peso até o vizinho for menor que a distância até o vizinho
+                dist[v.first] = alt; //Atualiza a distância com esse melhor caminho encontrado
+                Q.push(make_pair(dist[v.first], v.first)); //Insere nó o vizinho na fila de prioridade
             }
         }
     }
     for (int i = 0; i < G.n; i++) // index + 1 for final answer
         printf("Dist[%d] = %d\n", i, dist[i]);
-}
+};
